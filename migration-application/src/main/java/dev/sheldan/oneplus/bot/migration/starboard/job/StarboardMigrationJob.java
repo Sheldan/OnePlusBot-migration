@@ -1,7 +1,7 @@
 package dev.sheldan.oneplus.bot.migration.starboard.job;
 
-import dev.sheldan.abstracto.utility.models.database.StarboardPost;
-import dev.sheldan.abstracto.utility.service.management.StarboardPostManagementService;
+import dev.sheldan.abstracto.starboard.model.database.StarboardPost;
+import dev.sheldan.abstracto.starboard.service.management.StarboardPostManagementService;
 import dev.sheldan.oneplus.bot.migration.common.MigrationJob;
 import dev.sheldan.oneplus.bot.migration.starboard.models.StarboardMessage;
 import dev.sheldan.oneplus.bot.migration.starboard.processor.StarboardPostProcessor;

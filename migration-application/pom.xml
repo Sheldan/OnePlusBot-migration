@@ -18,7 +18,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <abstracto.version>1.0-SNAPSHOT</abstracto.version>
+        <abstracto.version>1.2</abstracto.version>
         <mysql.connector.version>8.0.23</mysql.connector.version>
         <spring-boot-starter.version>2.3.1.RELEASE</spring-boot-starter.version>
         <apache.csv.version>1.4</apache.csv.version>
@@ -37,6 +37,18 @@
             <dependency>
                 <groupId>dev.sheldan.abstracto.modules</groupId>
                 <artifactId>moderation-impl</artifactId>
+                <version>${abstracto.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.sheldan.abstracto.modules</groupId>
+                <artifactId>starboard-impl</artifactId>
+                <version>${abstracto.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.sheldan.abstracto.modules</groupId>
+                <artifactId>link-embed-impl</artifactId>
                 <version>${abstracto.version}</version>
             </dependency>
 
@@ -123,12 +135,21 @@
         <dependency>
             <groupId>dev.sheldan.abstracto.modules</groupId>
             <artifactId>modmail-impl</artifactId>
-            <version>${abstracto.version}</version>
         </dependency>
 
         <dependency>
             <groupId>dev.sheldan.abstracto.modules</groupId>
             <artifactId>utility-impl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.sheldan.abstracto.modules</groupId>
+            <artifactId>starboard-impl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.sheldan.abstracto.modules</groupId>
+            <artifactId>link-embed-impl</artifactId>
         </dependency>
 
         <dependency>
@@ -210,5 +231,22 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/Sheldan/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
 
 </project>
