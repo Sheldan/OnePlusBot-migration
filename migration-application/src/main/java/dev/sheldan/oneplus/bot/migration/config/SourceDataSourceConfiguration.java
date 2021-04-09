@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "dev.sheldan.oneplus.bot.migration.starboard.repository",
+@EnableJpaRepositories(basePackages = "dev.sheldan.oneplus.bot.migration",
         entityManagerFactoryRef = "sourceEntityManagerFactory",
         transactionManagerRef = "sourceTransactionManager"
 )

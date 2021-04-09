@@ -18,7 +18,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <abstracto.version>1.2</abstracto.version>
+        <abstracto.version>1.2.8</abstracto.version>
         <mysql.connector.version>8.0.23</mysql.connector.version>
         <spring-boot-starter.version>2.3.1.RELEASE</spring-boot-starter.version>
         <apache.csv.version>1.4</apache.csv.version>
@@ -71,12 +71,6 @@
             </dependency>
 
             <dependency>
-                <groupId>dev.sheldan.abstracto.scheduling</groupId>
-                <artifactId>scheduling-impl</artifactId>
-                <version>${abstracto.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>dev.sheldan.abstracto.modules</groupId>
                 <artifactId>assignable-roles-impl</artifactId>
                 <version>${abstracto.version}</version>
@@ -115,6 +109,12 @@
                 <version>${abstracto.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>dev.sheldan.abstracto.modules</groupId>
+                <artifactId>remind-impl</artifactId>
+                <version>${abstracto.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -126,16 +126,6 @@
         </dependency>
 
         <!-- modules containing commands -->
-
-        <dependency>
-            <groupId>dev.sheldan.abstracto.modules</groupId>
-            <artifactId>moderation-impl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.sheldan.abstracto.modules</groupId>
-            <artifactId>modmail-impl</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>dev.sheldan.abstracto.modules</groupId>
@@ -153,6 +143,11 @@
         </dependency>
 
         <dependency>
+            <groupId>dev.sheldan.abstracto.modules</groupId>
+            <artifactId>remind-impl</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>dev.sheldan.abstracto.core</groupId>
             <artifactId>metrics-impl</artifactId>
         </dependency>
@@ -161,22 +156,6 @@
         <dependency>
             <groupId>dev.sheldan.abstracto.modules</groupId>
             <artifactId>experience-tracking-impl</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>dev.sheldan.abstracto.scheduling</groupId>
-                    <artifactId>scheduling-impl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.sheldan.abstracto.modules</groupId>
-            <artifactId>assignable-roles-impl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.sheldan.abstracto.modules</groupId>
-            <artifactId>statistic-impl</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>dev.sheldan.abstracto.scheduling</groupId>
