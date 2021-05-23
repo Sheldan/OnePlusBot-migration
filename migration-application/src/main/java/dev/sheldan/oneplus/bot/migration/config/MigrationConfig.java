@@ -29,6 +29,14 @@ public class MigrationConfig {
         return longConfig.get("defaultStarboardSourceChannelId");
     }
 
+    public Long getDefaultProfanityChannel() {
+        return longConfig.get("defaultProfanityChannel");
+    }
+
+    public Long getProfanityReportChannel() {
+        return longConfig.get("profanityReportChannel");
+    }
+
     @PostConstruct
     public void convertIds() {
         config.keySet().forEach(s -> {

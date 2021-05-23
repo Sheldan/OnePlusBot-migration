@@ -7,4 +7,7 @@ The migrations are done incrementally, as the features are ported and each of th
 The application uses a lot of services from the new version in order to create the objects appropriately, leading to a lot of dependencies pulled in (scheduling etc), which are not necessary, but as the application is a one off migration for each feature, this is not a big issue.
 In its essence, this application is a standalone [Spring Boot](https://spring.io/projects/spring-boot) application which executes the migration when starting up.
 
-Supported migrations: Starboard
+Supported migrations: 
+* Starboard
+* Reminders
+* Profanities
