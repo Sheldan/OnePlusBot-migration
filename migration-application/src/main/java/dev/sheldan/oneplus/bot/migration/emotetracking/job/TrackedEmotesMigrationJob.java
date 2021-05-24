@@ -19,13 +19,17 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
@@ -58,6 +62,9 @@ public class TrackedEmotesMigrationJob extends ListenerAdapter implements Migrat
     @Autowired
     private BotService botService;
 
+    private final Set<Long> handledEmotes = new HashSet<>();
+    private static final int BATCH_SIZE = 10;
+
     @Override
     @Transactional
     public void execute() {
@@ -75,19 +82,31 @@ public class TrackedEmotesMigrationJob extends ListenerAdapter implements Migrat
                 .queue(listedEmotes -> self.convertEmotes(listedEmotes));
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void convertEmotes(List<ListedEmote> guildEmotes) {
         List<LegacyEmotes> legacyEmotes = legacyEmotesRepository.findAll();
         log.info("Found {} legacy emotes.", legacyEmotes.size());
         AServer server = serverManagementService.loadServer(migrationConfig.getServerId());
+        int emoteConverted = 0;
         for (int i = 0; i < legacyEmotes.size(); i++) {
             LegacyEmotes emote = legacyEmotes.get(i);
             log.info("Converting emote {} with {} uses.", i + 1, emote.getEmoteUses().size());
             if(!emote.getTrackingDisabled()) {
                 Long emoteId = emote.getEmoteId();
+                if(emoteConverted > BATCH_SIZE) {
+                    CompletableFuture.runAsync(() -> {
+                        log.info("Starting new transaction.");
+                        self.convertEmotes(guildEmotes);
+                    });
+                    return;
+                }
                 if(emoteId == 0) {
                     continue;
                 }
+                if(handledEmotes.contains(emoteId)) {
+                    continue;
+                }
+                handledEmotes.add(emoteId);
                 Boolean exists = guildEmotes.stream().anyMatch(listedEmote -> listedEmote.getIdLong() == emote.getEmoteId());
                 String emoteName = emote.getName();
                 Boolean animated = emote.getAnimated();
@@ -100,9 +119,13 @@ public class TrackedEmotesMigrationJob extends ListenerAdapter implements Migrat
                     Instant usageDate = legacyEmoteHeatMap.getUsageDate().plus(2, ChronoUnit.HOURS).truncatedTo(ChronoUnit.DAYS);
                     usedEmoteManagementService.createEmoteUsageFor(trackedEmote, legacyEmoteHeatMap.getUsageCount(), usageDate);
                 });
+                emoteConverted++;
             } else {
                 log.info("Emote {} has tracking disabled - mot migrating.", emote.getEmoteId());
             }
+        }
+        if(emoteConverted == 0) {
+            log.info("No further emotes found. Exiting.");
         }
     }
 
