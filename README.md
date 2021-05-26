@@ -11,3 +11,5 @@ Supported migrations:
 * Starboard
 * Reminders
 * Profanities
+* Tracked emotes 
+* Experience
