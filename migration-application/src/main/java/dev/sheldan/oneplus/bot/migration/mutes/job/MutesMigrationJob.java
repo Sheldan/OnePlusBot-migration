@@ -11,7 +11,7 @@ import dev.sheldan.abstracto.moderation.service.management.MuteManagementService
 import dev.sheldan.oneplus.bot.migration.common.MigrationJob;
 import dev.sheldan.oneplus.bot.migration.config.MigrationConfig;
 import dev.sheldan.oneplus.bot.migration.mutes.models.LegacyMutes;
-import dev.sheldan.oneplus.bot.migration.mutes.repository.LegacyProfanityMutesRepository;
+import dev.sheldan.oneplus.bot.migration.mutes.repository.LegacyMutesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ public class MutesMigrationJob implements MigrationJob {
     private ServerManagementService serverManagementService;
 
     @Autowired
-    private LegacyProfanityMutesRepository legacyProfanityMutesRepository;
+    private LegacyMutesRepository legacyMutesRepository;
 
     @Autowired
     private MuteManagementService muteManagementService;
@@ -44,7 +44,7 @@ public class MutesMigrationJob implements MigrationJob {
     @Override
     @Transactional
     public void execute() {
-        List<LegacyMutes> legacyMutes = legacyProfanityMutesRepository.findAll();
+        List<LegacyMutes> legacyMutes = legacyMutesRepository.findAll();
         Long serverId = migrationConfig.getServerId();
         AServer server = serverManagementService.loadServer(serverId);
         log.info("Found {} legacy mutes.", legacyMutes.size());

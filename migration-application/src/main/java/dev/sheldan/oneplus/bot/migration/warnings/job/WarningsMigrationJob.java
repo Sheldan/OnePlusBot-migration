@@ -8,7 +8,7 @@ import dev.sheldan.abstracto.moderation.service.management.WarnManagementService
 import dev.sheldan.oneplus.bot.migration.common.MigrationJob;
 import dev.sheldan.oneplus.bot.migration.config.MigrationConfig;
 import dev.sheldan.oneplus.bot.migration.warnings.models.LegacyWarnings;
-import dev.sheldan.oneplus.bot.migration.warnings.repository.LegacyProfanityWarningsRepository;
+import dev.sheldan.oneplus.bot.migration.warnings.repository.LegacyWarningsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ public class WarningsMigrationJob implements MigrationJob {
     private ServerManagementService serverManagementService;
 
     @Autowired
-    private LegacyProfanityWarningsRepository legacyProfanityWarningsRepository;
+    private LegacyWarningsRepository legacyWarningsRepository;
 
     @Autowired
     private WarnManagementService warnManagementService;
@@ -38,7 +38,7 @@ public class WarningsMigrationJob implements MigrationJob {
     @Override
     @Transactional
     public void execute() {
-        List<LegacyWarnings> legacyWarnings = legacyProfanityWarningsRepository.findAll();
+        List<LegacyWarnings> legacyWarnings = legacyWarningsRepository.findAll();
         Long serverId = migrationConfig.getServerId();
         log.info("Loaded {} warnings.", legacyWarnings.size());
         legacyWarnings.forEach(legacyWarning -> {
