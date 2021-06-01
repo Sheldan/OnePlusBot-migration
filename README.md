@@ -13,3 +13,4 @@ Supported migrations:
 * Profanities
 * Tracked emotes 
 * Experience
+* Mutes
