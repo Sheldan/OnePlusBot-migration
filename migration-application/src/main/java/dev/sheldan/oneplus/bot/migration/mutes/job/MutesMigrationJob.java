@@ -58,10 +58,6 @@ public class MutesMigrationJob implements MigrationJob {
                     .build();
             String triggerKey = null;
             log.info("Migration mute {}.", legacyMute.getId());
-            if(!legacyMute.getMuteEnded()) {
-                triggerKey = muteService.startUnMuteJobFor(legacyMute.getUnMuteDate(), legacyMute.getId(), serverId);
-                log.info("Mute did not end yet - scheduling to be un-muted at {}.", legacyMute.getUnMuteDate());
-            }
             Mute createdMute = muteManagementService.createMute(mutedUser, mutingUser, legacyMute.getReason(), legacyMute.getUnMuteDate(), serverAChannelMessage, triggerKey, legacyMute.getId());
             createdMute.setMuteEnded(legacyMute.getMuteEnded());
             createdMute.setMuteDate(legacyMute.getMuteDate());

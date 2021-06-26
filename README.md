@@ -14,3 +14,5 @@ Supported migrations:
 * Tracked emotes 
 * Experience
 * Mutes
+* User notes
+* FAQ

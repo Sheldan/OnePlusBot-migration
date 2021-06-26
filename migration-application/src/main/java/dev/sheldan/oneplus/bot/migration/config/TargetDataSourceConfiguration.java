@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "dev.sheldan.abstracto",
+@EnableJpaRepositories(basePackages = {"dev.sheldan.abstracto", "dev.sheldan.oneplus.bot.modules"},
         entityManagerFactoryRef = "targetEntityManagerFactory",
         transactionManagerRef = "targetTransactionManager"
 )
@@ -44,7 +44,7 @@ public class TargetDataSourceConfiguration {
     public LocalContainerEntityManagerFactoryBean targetEntityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(targetDataSource())
-                .packages("dev.sheldan.abstracto")
+                .packages("dev.sheldan.abstracto", "dev.sheldan.oneplus.bot.modules")
                 .build();
     }
 
