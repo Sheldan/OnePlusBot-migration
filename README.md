@@ -16,3 +16,5 @@ Supported migrations:
 * Mutes
 * User notes
 * FAQ
+
+This repository is archived as all the information was migrated.
